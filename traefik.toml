@@ -1,0 +1,29 @@
+debug = true
+checkNewVersion = true
+logLevel = "ERROR"
+defaultEntryPoints = ["https","http"]
+
+[web]
+address = ":8080"
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+    [entryPoints.http.redirect]
+    entryPoint = "https"
+
+[entryPoints.https]
+  address = ":443"
+  [entryPoints.https.tls]
+  [[entryPoints.https.tls.certificates]]
+    certFile = "/var/lib/boot2docker/certs/cert.pem"
+    keyFile = "/var/lib/boot2docker/certs/key.pem"
+
+[retry]
+
+[docker]
+endpoint = "unix:///var/run/docker.sock"
+domain = "traefik"
+watch = true
+exposedbydefault = true
+swarmmode = true
